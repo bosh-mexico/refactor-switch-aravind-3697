@@ -11,7 +11,7 @@ class PaymentMode(Enum):
 def checkout(mode: PaymentMode, amount: float):
     # Validate amount
     if amount <= 0:
-        print("❌ Error: Invalid payment amount. Please enter a positive value.")
+        print("Error: Invalid payment amount. Please enter amount correctly.")
         return
 
     # Process based on mode
