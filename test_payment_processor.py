@@ -1,22 +1,19 @@
-import unittest
-from payment_processor import PaymentMode, checkout
+from payment_processor import checkout
 
-class TestPaymentProcessor(unittest.TestCase):
+def run_tests():
+    print("\n--- Running Payment Processor Tests ---")
+    test_cases = [
+        ("paypal", 100.00),
+        ("googlepay", 200.00),
+        ("creditcard", 300.00),
+        ("applepay", 400.00),   # Unsupported
+        ("paypal", -50.00),     # Invalid amount
+    ]
 
-    def test_paypal(self):
-        checkout(PaymentMode.PAYPAL, 100)
+    for mode, amount in test_cases:
+        print(f"\n[Test] Mode: {mode}, Amount: {amount}")
+        checkout(mode, amount)
 
-    def test_googlepay(self):
-        checkout(PaymentMode.GOOGLEPAY, 200)
-
-    def test_creditcard(self):
-        checkout(PaymentMode.CREDITCARD, 300)
-
-    def test_invalid_mode(self):
-        checkout(PaymentMode.UNKNOWN, 400)
-
-    def test_invalid_amount(self):
-        checkout(PaymentMode.PAYPAL, -10)
 
 if __name__ == "__main__":
-    unittest.main()
+    run_tests()
