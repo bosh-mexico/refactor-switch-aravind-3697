@@ -1,33 +1,12 @@
-from enum import Enum
+from factory import PaymentFactory
 
-# Define Payment Modes
-class PaymentMode(Enum):
-    PAYPAL = 1
-    GOOGLEPAY = 2
-    CREDITCARD = 3
-    UNKNOWN = 99
-
-
-def checkout(mode: PaymentMode, amount: float):
-
-    # Validate amount
+def checkout(payment_type: str, amount: float):
     if amount <= 0:
-        print("Error: Invalid payment amount. Please enter correct amount.")
+        print("Invalid payment amount.")
         return
 
-    # Process based on mode
-    match mode:
-        case PaymentMode.PAYPAL:
-            print(f"Processing PayPal payment of ${amount:.2f}")
-            print("   -> Connecting to PayPal API... (placeholder logic)")
-
-        case PaymentMode.GOOGLEPAY:
-            print(f"Processing Google Pay payment of ${amount:.2f}")
-            print("   -> Connecting to Google Pay API... (placeholder logic)")
-
-        case PaymentMode.CREDITCARD:
-            print(f"Processing Credit Card payment of ${amount:.2f}")
-            print("   -> Connecting to Credit Card gateway... (placeholder logic)")
-
-        case _:
-            print("Error: Unsupported or invalid payment mode selected!")
+    processor = PaymentFactory.get_processor(payment_type)
+    if processor:
+        processor.process_payment(amount)
+    else:
+        print(f"Unsupported payment mode: '{payment_type}'")
