@@ -1,13 +1,22 @@
-from payment_processor.factory import PaymentFactory
+import unittest
+from payment_processor import PaymentMode, checkout
 
-def test_payment_modes():
-    for mode in ["paypal", "googlepay", "creditcard", "applepay"]:
-        print(f"\nTesting mode: {mode}")
-        processor = PaymentFactory.get_processor(mode)
-        if processor:
-            processor.process_payment(100)
-        else:
-            print("❌ No processor available")
+class TestPaymentProcessor(unittest.TestCase):
+
+    def test_paypal(self):
+        checkout(PaymentMode.PAYPAL, 100)
+
+    def test_googlepay(self):
+        checkout(PaymentMode.GOOGLEPAY, 200)
+
+    def test_creditcard(self):
+        checkout(PaymentMode.CREDITCARD, 300)
+
+    def test_invalid_mode(self):
+        checkout(PaymentMode.UNKNOWN, 400)
+
+    def test_invalid_amount(self):
+        checkout(PaymentMode.PAYPAL, -10)
 
 if __name__ == "__main__":
-    test_payment_modes()
+    unittest.main()
