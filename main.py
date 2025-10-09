@@ -1,9 +1,8 @@
-from payment_processor import PaymentMode, checkout
+from payment_processor import checkout
 
 if __name__ == "__main__":
-    amount = 150.75
-
-    checkout(PaymentMode.PAYPAL, amount)
-    checkout(PaymentMode.GOOGLEPAY, amount)
-    checkout(PaymentMode.CREDITCARD, amount)
-    checkout(PaymentMode.UNKNOWN, amount)
+    print("\n--- Payment Checkout Simulation ---\n")
+    checkout("paypal", 150.00)
+    checkout("googlepay", 200.00)
+    checkout("creditcard", 300.00)
+    checkout("applepay", 400.00)  # Unsupported mode
